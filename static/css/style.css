@@ -1,0 +1,7 @@
+/* css for message aggregator */
+.channel-tag-list {
+	background-color: #f0f0f0;
+}
+.channel-tag-list input {
+	margin-bottom: 0;
+}

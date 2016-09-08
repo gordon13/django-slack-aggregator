@@ -1,0 +1,6 @@
+# aggregator API
+
+get_tags
+add_tag(tag)
+
+get_messages_by_tags(tags[])
