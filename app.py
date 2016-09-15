@@ -9,6 +9,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 slack = SlackConnector()
 
+"""
+Routes
+"""
 @app.route("/")
 def main():
 	context = {
