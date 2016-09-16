@@ -3,10 +3,17 @@ Vue.config.delimiters = ['[[', ']]']
 var vm = new Vue({
 	el: '#app',
 	data: {
-		channels: [],
+		// tags checkbox
 		tags: [],
-		activeTags: [],
-		messages: []
+		activeTags: storage.fetch("activeTags") || [],
+
+		// channels checkbox
+		channels: [],
+		activeChannels: storage.fetch("activeChannels") || [],		
+
+		// messages
+		messages: [],
+		maxMessages: 50
 	},
 
 	ready: function () {
@@ -14,6 +21,21 @@ var vm = new Vue({
 		this.getTags();
 		this.getLastSelected();
 		this.getFilteredMessages();
+	},
+
+	watch: {
+		activeTags: {
+			handler: function (tags) {
+				storage.save("activeTags", tags)
+			},
+			deep: true
+		},
+		activeChannels: {
+			handler: function (channels) {
+				storage.save("activeChannels", channels)
+			},
+			deep: true
+		}
 	},
 
 	methods: {

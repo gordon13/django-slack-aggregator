@@ -4,21 +4,27 @@
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/normalize.css') }}">
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/skeleton.css') }}">
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
-		<title>rLoop message aggregator</title>
+		<title>rLoop Message Aggregator</title>
 	</head>
 
 	<body>
-		<div id="app" class="container">
+		<div id="app" class="container u-full-width u-max-full-width">
 			<div class="row">
 				<div class="four columns channel-tag-list">
+					<label for="maxMessages">Max messages</label>
+      				<input class="u-full-width" type="text" id="maxMessages" value="[[maxMessages]]">
+						
 					<strong>Tags: [[tags.length]]</strong>
+					<span>Checked names: [[ activeTags | json ]]</span>
 					<label v-for="tag in tags">
-						<input type="checkbox">
+						<input type="checkbox" value="[[tag.value]]" id="[[tag.value]]" v-model="activeTags">
 						<span class="label-body">[[tag.value]]</span>
 					</label>
+
 					<strong>Channels: [[channels.length]]</strong>
+					<span>Checked names: [[ activeChannels | json ]]</span>
 					<label v-for="channel in channels">
-						<input type="checkbox">
+						<input type="checkbox" value="[[channel.name]]" id="[[channel.name]]" v-model="activeChannels">
 						<span class="label-body">[[channel.name]]</span>
 					</label>
 				</div>
@@ -26,12 +32,16 @@
 					<label v-for="message in messages">
 						[[message.body]]
 					</label>
+					<div v-show="messages.length == 0">
+						No messages found. Select tags and channels to fetch relevant messages.
+					</div>
 				</div>
 			</div>
 		</div>
 	  	
 		<script src="{{ url_for('static', filename='js/vue.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/vue-resource.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/storage.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 	</body>
 </html>

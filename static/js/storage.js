@@ -2,14 +2,14 @@
 
 	'use strict';
 
-	var STORAGE_KEY = 'slack-aggregator';
+	var STORAGE_KEY = 'slack-aggregator-';
 
-	exports.tagsStorage = {
-		fetch: function () {
-			return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+	exports.storage = {
+		fetch: function (storeName) {
+			return JSON.parse(localStorage.getItem(STORAGE_KEY+storeName) || '[]');
 		},
-		save: function (tags) {
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(tags));
+		save: function (storeName, tags) {
+			localStorage.setItem(STORAGE_KEY+storeName, JSON.stringify(tags));
 		}
 	};
 
