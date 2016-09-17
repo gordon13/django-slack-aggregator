@@ -6,3 +6,7 @@ Django app used to aggregate slack messages by tags
 virtualenv env
 
 env\scripts\pip.exe install -r requirements.txt
+
+Note: It will also need a config file called config.cfg with the following format:
+[connection_settings]
+token: <slack API token>
