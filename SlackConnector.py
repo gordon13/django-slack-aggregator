@@ -2,6 +2,7 @@ from slacker import Slacker
 from decimal import Decimal
 import ConfigParser
 import datetime
+import time
 import json
 import os
 
@@ -10,6 +11,13 @@ class SlackConnector():
 	slack = None
 	_users = []
 	_channels = []
+	
+	# Send a message to #general channel
+	#slack.chat.post_message('#general', 'Hello fellow slackers!')
+
+	# Get users list
+	#response = slack.users.list()
+	#users = response.body['members']
 
 	def _epoch_to_date(self, epoch):
 		dateobj = datetime.datetime.fromtimestamp(float(epoch)).date()
@@ -29,38 +37,34 @@ class SlackConnector():
 			index += length_sub
 		return indices
 
-
-	# Send a message to #general channel
-	#slack.chat.post_message('#general', 'Hello fellow slackers!')
-
-	# Get users list
-	#response = slack.users.list()
-	#users = response.body['members']
-
 	# get channel id
 	def get_users(self):
-		users = self.slack.users.list()
-		return users
+		members = self.slack.users.list().body['members']
+		res = {}
+		for i, member in enumerate(members):
+			res[member['id']] = member['name']
+		return res
 
 	def get_channels(self):
 		channels = self.slack.channels.list()
 		return channels
 
-	def get_filtered_messages(self, channels=[], tags=[]):
-		channels = self.get_channels()
+	def get_filtered_messages(self, selected_channels=[], selected_tags=[]):
 		message_return = []
-		for channel in channels:
+		for channel in self._channels.body['channels']:
 			channel_id = channel['id']
-			messages = self.slack.channels.history(channel_id).body['messages']
-			for message in messages:
-				for tag in tags:
-					if tag in message['text']:
-						message_return.append(message)
+			channel_name = channel['name']
+			if channel_name in selected_channels:
+				messages = self.slack.channels.history(channel_id).body['messages']
+				for message in messages:
+					for tag in selected_tags:
+						# check if "+tag" exists in message text and append it
+						if "+%s"%tag in message['text']:
+							# convert user and timestamp to human readable values
+							message['user'] = self._users[message['user']]
+							message['ts'] = datetime.datetime.fromtimestamp(float(message['ts'].decode("utf-8")))
+							message_return.append(message)
 		return message_return
-
-
-
-
 
 	def get_messages(self):
 		channel_name = 'hdk'
