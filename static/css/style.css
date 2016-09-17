@@ -1,7 +1,51 @@
-/* css for message aggregator */
+/* overrides*/
+h1 {
+	font-size: 1.5em;
+}
+h2 {
+    font-size: 1.2em;
+}
+h3 {
+    font-size: 1.1em;
+}
+body {
+	font-size: 16px
+}
+/* theme css */
+.brand h1 {
+    padding: 0 15px;
+}
 .channel-tag-list {
 	background-color: #f0f0f0;
+	box-shadow: #b1b1b1 0px 0px 20px;
+	z-index: 10;
 }
 .channel-tag-list input {
 	margin-bottom: 0;
+}
+.message-list {
+	background-color: #fbfbfb;
+}
+.message-list .no-messages-wrapper {
+	padding-left: 15px;
+	text-align: center;
+    vertical-align: middle;
+}
+.message-list .no-messages-wrapper span {
+	display: block;
+}
+.message-wrapper {
+	padding: 5px 5px 5px 15px;
+	border-bottom: solid 1px #c7c7c7;
+}
+.message-wrapper .op {
+    padding-bottom: 5px;
+}
+.selected-channels-wrapper,
+.selected-tags-wrapper {
+	border-bottom: 2px solid #dcdcdc;
+}
+
+.channel-tag-list .pure-form.pure-form-stacked {
+    padding: 15px;
 }

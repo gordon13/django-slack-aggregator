@@ -17,29 +17,30 @@ var vm = new Vue({
 	},
 
 	ready: function () {
-		this.getChannels();
-		this.getTags();
-		this.getLastSelected();
-		this.getFilteredMessages();
+		this.updateChannels();
+		this.updateTags();
+		this.updateFilteredMessages(this.activeChannels, this.activeTags);
 	},
 
 	watch: {
 		activeTags: {
 			handler: function (tags) {
 				storage.save("activeTags", tags)
+				this.updateFilteredMessages(this.activeChannels, this.activeTags);
 			},
 			deep: true
 		},
 		activeChannels: {
 			handler: function (channels) {
 				storage.save("activeChannels", channels)
+				this.updateFilteredMessages(this.activeChannels, this.activeTags);
 			},
 			deep: true
 		}
 	},
 
 	methods: {
-		getChannels: function () {
+		updateChannels: function () {
 	    	console.log("get channels...")
 			this.$http.get('/api/v1/get_channels').then((response) => {
 				var channels = response.body.channels;
@@ -48,7 +49,7 @@ var vm = new Vue({
 				console.log("Failed to get channels")
 			});
 	    },
-		getTags: function () {
+		updateTags: function () {
 	    	console.log("get tags...")
 			this.$http.get('/api/v1/get_tags').then((response) => {
 				var tags = response.body.tags;
@@ -57,14 +58,13 @@ var vm = new Vue({
 				console.log("Failed to get tags")
 			});
 	    },
-	    getLastSelected: function () {
-
-	    },
-	    getFilteredMessages: function (channels, tags) {
+	    updateFilteredMessages: function (channels, tags) {
 	    	console.log("get getFilteredMessages...")
-	    	if(channels && tags){	
-				this.$http.get('/api/v1/get_filtered_messages?'+channels+"&"+tags).then((response) => {
+	    	if(channels && tags){
+				this.$http.get('/api/v1/get_filtered_messages?channels='+channels.join("+")+"&tags="+tags.join("+")).then((response) => {
+					console.log("Got messages")
 					var messages = response.body.messages;
+					console.log(response.body)
 					this.$set('messages',messages);
 				}, (response) => {
 					console.log("Failed to get messages")
@@ -72,7 +72,13 @@ var vm = new Vue({
 	    	} else {
 	    		console.log("Please select one or more channel and tag")
 	    	}
+	  		//{
+			// 	xhr: {
+			// 		onprogress: function(event) {
+			// 			console.log("progress")
+			// 		}
+			//	}
+			//}
 	    }
-
 	}
 });
