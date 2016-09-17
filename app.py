@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from SlackConnector import SlackConnector
+from operator import itemgetter
 import string
 import time
 import re
@@ -95,6 +96,7 @@ def get_filtered_messages():
 
 	if (validate(url_validation, parameter_string)):
 		messages = slack.get_filtered_messages(channels, tags)
+		messages = sorted(messages, key=itemgetter('ts')) 
 	else:
 		messages = []
 	return jsonify(messages=messages)

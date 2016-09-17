@@ -59,10 +59,11 @@ class SlackConnector():
 				for message in messages:
 					for tag in selected_tags:
 						# check if "+tag" exists in message text and append it
-						if "+%s"%tag in message['text']:
+						if tag != "" and "+%s"%tag in message['text']:
 							# convert user and timestamp to human readable values
 							message['user'] = self._users[message['user']]
 							message['ts'] = datetime.datetime.fromtimestamp(float(message['ts'].decode("utf-8")))
+							message['channel_name'] = channel_name
 							message_return.append(message)
 		return message_return
 

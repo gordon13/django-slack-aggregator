@@ -9,17 +9,28 @@ h3 {
     font-size: 1.1em;
 }
 body {
-	font-size: 16px
+	font-size: 16px;
+	color: #4D4d4d;
 }
+
 /* theme css */
-.brand h1 {
-    padding: 0 15px;
+.brand img {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
 }
+.brand {
+    padding: 10px 50px;
+}
+
 .channel-tag-list {
 	background-color: #f0f0f0;
 	box-shadow: #b1b1b1 0px 0px 20px;
 	z-index: 10;
+	min-width: 300px;
 }
+
 .channel-tag-list input {
 	margin-bottom: 0;
 }
@@ -45,7 +56,83 @@ body {
 .selected-tags-wrapper {
 	border-bottom: 2px solid #dcdcdc;
 }
-
+.selected-channels-wrapper label,
+.selected-tags-wrapper label {
+    background-color: #cfe3ea;
+    border-radius: 5px;
+    padding: 5px;
+}
 .channel-tag-list .pure-form.pure-form-stacked {
-    padding: 15px;
+    padding: 0 15px;
+}
+
+.controls-menu label:hover {
+    background-color: #d8eae1;
+    border-radius: 5px;
+}
+
+.controls-open-button:hover {
+	background-color: #d8d8ef;
+	box-shadow: 0 -2px 0 #d7efff, 0 -3px 0 #cac9c9;
+}
+.controls-open-button {
+	text-align: center;
+    padding: 5px;
+    display: block;
+    box-shadow: 0 -2px 0 #fff8f8, 0 -3px 0 #cac9c9;
+    background-color: #e2e2e2;
+}
+
+/* menu collapse functionality */
+#controls-open-button-cbox {
+	display: none;
+}
+#controls-open-button-cbox:checked ~ .controls-menu {
+    display: block !important;
+}
+#controls-open-button-cbox:checked ~ .controls-open-button {
+	background-color: #d2d2d2;
+	box-shadow: 0 -2px 0 #b5b5b5, 0 -3px 0 #cac9c9;
+}
+
+
+/* utility functions*/
+/*sm	*/
+@media screen and (min-width: 35.5em) {
+	.hidden-sm {
+		display: none;
+	}
+	.visible-sm {
+		display: block !important;
+	}
+}
+
+/*md	*/
+@media screen and (min-width: 48em) {
+	.hidden-md {
+		display: none;
+	}
+	.visible-md {
+		display: block !important;
+	}
+}
+
+/*lg	*/
+@media screen and (min-width: 64em)	{
+	.hidden-lg {
+		display: none;
+	}
+	.visible-lg {
+		display: block !important;
+	}
+}
+
+/*xl	*/
+@media screen and (min-width: 80em) {
+	.hidden-xl {
+		display: none;
+	}
+	.visible-xl {
+		display: block !important;
+	}
 }
